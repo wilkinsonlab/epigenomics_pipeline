@@ -1,0 +1,46 @@
+# configuration for fetch and index genomes
+
+genomes:
+  - id: Brapa_chiifu_v3.0
+    name: Brassica_rapa Chiifu (Brapa_chiifu_v3.0)
+    url: http://brassicadb.org/brad/datasets/pub/BrassicaceaeGenome/Brassica_rapa/V3.0/Brapa_sequence_v3.0.fasta.gz
+    path: /data/files/Brapa_chiifu_v3.0.fa.gz
+
+data_managers:
+    # Data manager ID
+    - id: toolshed.g2.bx.psu.edu/repos/devteam/data_manager_fetch_genome_dbkeys_all_fasta/data_manager_fetch_genome_all_fasta_dbkey/0.0.2
+      # tool parameters, nested parameters should be specified using a pipe (|)
+      params:
+        - 'dbkey_source|dbkey_source_selector': 'new'
+        - 'dbkey_source|dbkey': '{{ item.id }}'
+        - 'dbkey_source|dbkey_name': '{{ item.name }}'
+        - 'reference_source|reference_source_selector': 'directory'
+        - 'reference_source|fasta_filename': '{{ item.path }}'
+#        - 'reference_source|reference_source_selector': 'url'
+#        - 'reference_source|user_url': '{{ item.url }}'
+      # Items can be set to "{{ genomes }}" which removes a lot of copy paste clutter.
+      # Warning: this is not Ansible. Other values than "genomes" will not work!
+      items: "{{ genomes }}"
+      # Name of the data-tables you want to reload after your DM are finished. This can be important for subsequent data managers
+      data_table_reload:
+        - all_fasta
+        - __dbkeys__
+
+    - id: toolshed.g2.bx.psu.edu/repos/devteam/data_manager_bowtie2_index_builder/bowtie2_index_builder_data_manager/2.3.0
+      params:
+        - 'all_fasta_source': '{{ item.id }}'
+        - 'sequence_name': '{{ item.name }}'
+        - 'sequence_id': '{{ item.id }}'
+      items: "{{ genomes }}"
+      data_table_reload:
+        # Bowtie creates indices for Bowtie and TopHat
+        - bowtie2_indexes
+
+    - id: sam_fasta_index_builder
+      params:
+        - 'all_fasta_source': '{{ item.id }}'
+        - 'sequence_name': '{{ item.name }}'
+        - 'sequence_id': '{{ item.id }}'
+      items: "{{ genomes }}"
+      data_table_reload:
+        - fasta_indexes

@@ -1,0 +1,162 @@
+tools:
+- name: sra_tools
+  owner: iuc
+  tool_panel_section_id: 'getext'
+  revisions:
+  - '1790dcf3c32d' 
+
+- name: export_to_cluster
+  owner: earlhaminst
+  tool_panel_section_id: 'send'
+  revisions:
+  - '9838eed606ad'  # v0.0.2 
+  install_tool_dependencies: True
+
+- name: extract_element_from_collection
+  owner: erasmus-medical-center
+  tool_panel_section_id: 'collection_operations'
+  revisions:
+  - 'c46360dcbf3f'  # v0.1
+
+- name: multiqc
+  owner: iuc
+  tool_panel_section_label: 'NGS: QC and Manipulation'
+  revisions:
+  - '1c2db0054039'  # v1.6
+- name: fastqc
+  owner: devteam
+  tool_panel_section_label: 'NGS: QC and Manipulation'
+  revisions:
+  - '9da02be9c6cc'  # v0.72
+- name: trimmomatic
+  owner: pjbriggs
+  tool_panel_section_label: 'NGS: QC and Manipulation'
+  revisions:
+  - 'dfa082f84068'  # v0.36.5
+- name: fastq_groomer
+  owner: devteam
+  tool_panel_section_label: 'NGS: QC and Manipulation'
+  revisions:
+  - '71e5fa25b8a2'  # v1.1.1
+
+- name: bwa
+  owner: devteam
+  tool_panel_section_label: 'Mappers and Aligners'
+  revisions:
+  - '01ac0a5fedc3'
+- name: bowtie2
+  owner: devteam
+  tool_panel_section_label: 'Mappers and Aligners'
+  revisions:
+  - '17062a0decb7'  # v2.3.4.2
+
+- name: deseq2
+  owner: iuc
+  tool_panel_section_label: 'NGS: RNA Analysis'
+  revisions:
+  - 'd9e5cadc7f0b'  # v2.11.40.2
+- name: htseq_count
+  owner: lparsons
+  tool_panel_section_label: 'NGS: RNA Analysis'
+  revisions:
+  - '7f5a8d427b39'  # v0.9.1
+
+- name: busco
+  owner: iuc
+  tool_panel_section_label: 'NGS: Assembly'
+  revisions:
+  - 'f18f0b887c31'  # v3.0.2
+  install_tool_dependencies: True
+- name: quast
+  owner: iuc
+  tool_panel_section_label: 'NGS: Assembly'
+  revisions:
+  - 'f30d03867854'  # v5.0.2+galaxy0
+
+- name: macs2
+  owner: iuc
+  tool_panel_section_label: 'NGS: Peak Calling'
+  revisions:
+  - 'c16dbe4e2db2'  # v2.1.1.20160309.4
+- name: epic2
+  owner: mpaya
+  tool_panel_section_label: 'NGS: Peak Calling'
+  revisions:
+  - '8b4cb7f52809'  # v1.0.0
+
+- name: samtool_filter2
+  owner: devteam
+  tool_panel_section_label: 'SAMtools'
+  revisions:
+  - 56c31114ad4a
+- name: suite_samtools_1_2
+  owner: devteam
+  tool_panel_section_label: 'SAMtools'
+  revisions:
+  - 5b673ccc8747
+  install_tool_dependencies: True
+
+- name: bedtools
+  owner: iuc
+  tool_panel_section_label: 'BEDtools'
+  revisions:
+  - dde39ba9c031
+
+- name: picard
+  owner: devteam
+  tool_panel_section_label: 'Picard'
+  revisions:
+  - f6ced08779c4  # v2.18.2.1
+
+- name:  deeptools_bam_coverage
+  owner: bgruening
+  tool_panel_section_label: 'DeepTools'
+  revisions:
+  - b61d934cc1e8
+  install_tool_dependencies: True
+- name: suite_deeptools
+  owner: bgruening
+  tool_panel_section_label: 'DeepTools'
+  revisions:
+  - c7f0a14ef7de
+  install_tool_dependencies: True
+
+- name: text_processing
+  owner: bgruening
+  tool_panel_section_label: 'Text Processing'
+  revisions:
+  - 74a8bef53a00
+- name: add_input_name_as_column
+  owner: mvdbeek
+  tool_panel_section_label: 'Text Processing'
+  revisions:
+  - b31219f26a8f
+
+- name: data_manager_bowtie2_index_builder
+  owner: devteam
+  revisions:
+  - 83da94c0e4a6
+- name: data_manager_bwa_mem_index_builder
+  owner: devteam
+  revisions:
+  - 46066df8813d
+- name: data_manager_fetch_busco
+  owner: iuc
+  revisions:
+  - 53eec20e8fb6
+- name: data_manager_fetch_gene_annotation
+  owner: scottx611x
+  revisions:
+  - 9346d2955707
+- name: data_manager_fetch_genome_dbkeys_all_fasta
+  owner: devteam
+  revisions:
+  - b1bc53e9bbc5
+- name: data_manager_fetch_gff
+  owner: ieguinoa
+  revisions:
+  - c57bd7f3fb46
+- name: data_manager_manual
+  owner: iuc
+  revisions:
+  - 6524e573d9c2 

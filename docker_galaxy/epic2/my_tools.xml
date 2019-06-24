@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<toolbox monitor="true">
+ <section name="epic2_0.0.14" id="epic2">
+    <tool file="/galaxy-central/tools/epic2/epic2_wrapper.xml" />
+ </section>
+</toolbox>

@@ -1,0 +1,288 @@
+<tool id="epic2" name="epic2" version="0.0.1">
+    <description>Call peaks from alignment results</description>
+    <requirements>
+        <requirement type="package" version="0.0.14">epic2</requirement>
+        <requirement type="package">htslib</requirement>
+    </requirements>
+    
+    <stdio>
+        <exit_code range="1:125" level="fatal" description="Unknown error occurred" />
+        <exit_code range="130:" level="fatal" description="Unknown error occurred" />
+        <regex match="epic2: (command ){0,1}not found" source="stderr" level="fatal" description="The epic2 python package is not properly installed, contact Galaxy administrators" />
+    </stdio>
+    
+    <command><![CDATA[
+
+		##set up treatment files, extension must be bed, bedpe, bam, sam
+		#set $t_file_list = list()
+		#if str($treatment.t_multi_select) == "No":
+			#if $treatment.input_treatment_file.is_of_type('bed')
+				#set $t_file = 'ChIP_file.bed'
+				ln -s '$treatment.input_treatment_file' $t_file &&
+			#elif $treatment.input_treatment_file.is_of_type('bam')
+				#set $t_file = 'ChIP_file.bam'
+				ln -s '$treatment.input_treatment_file' $t_file &&
+				ln -s '$treatment.input_treatment_file.metadata.bam_index' ${t_file}.bai &&
+			#elif $treatment.input_treatment_file.is_of_type('sam')
+				#set $t_file = 'ChIP_file.sam'
+				ln -s '$treatment.input_treatment_file' $t_file &&
+			#end if
+			$t_file_list.append($t_file)
+		#else
+			#set $inputs = $treatment.input_treatment_file
+			#for $i, $f in enumerate($inputs)
+				#if $f.is_of_type('bed')
+					#set $t_file = ''.join(['ChIP_file_',str($i),'.bed'])
+					ln -s '$f' $t_file &&
+				#elif $f.is_of_type('bam')
+					#set $t_file = ''.join(['ChIP_file_',str($i),'.bam'])
+					ln -s '$f' $t_file &&
+					ln -s '$f.metadata.bam_index' ${t_file}.bai &&
+				#elif $f.is_of_type('sam')
+					#set $t_file = ''.join(['ChIP_file_',str($i),'.sam'])
+					ln -s '$f' $t_file &&
+				#end if
+				$t_file_list.append($t_file)
+			#end for
+		#end if
+
+		##set up control files, extension must be bed, bedpe, bam, sam
+		#if str($control.c_select) == "Yes":
+			#set $c_file_list = list()
+			#if str($control.c_multiple.c_multi_select) == "No":
+				#set $f = $control.c_multiple.input_control_file
+				#if $f.is_of_type('bed')
+					#set $c_file = 'control_file.bed'
+					ln -s '$f' $c_file &&
+				#elif $f.is_of_type('bam')
+					#set $c_file = 'control_file.bam'
+					ln -s '$f' $c_file &&
+					ln -s '$f.metadata.bam_index' ${c_file}.bai &&
+				#elif $f.is_of_type('sam')
+					#set $c_file = 'control_file.sam'
+					ln -s '$f' $c_file &&
+				#end if
+				$c_file_list.append($c_file)
+			#else
+				#set $inputs = $control.c_multiple.input_control_file
+				#for $i, $f in enumerate($inputs)
+					#if $f.is_of_type('bed')
+						#set $c_file = ''.join(['control_file',str($i),'.bed'])
+						ln -s '$f' $c_file &&
+					#elif $f.is_of_type('bam')
+						#set $c_file = ''.join(['control_file',str($i),'.bam'])
+						ln -s '$f' $c_file &&
+						ln -s '$f.metadata.bam_index' ${c_file}.bai &&
+					#elif $f.is_of_type('sam')
+						#set $c_file = ''.join(['control_file',str($i),'.sam'])
+						ln -s '$f' $c_file &&
+					#end if
+					$c_file_list.append($c_file)
+				#end for
+			#end if
+		#end if
+
+		epic2
+
+            ## Treatment File(s)
+			-t ${ ' '.join( $t_file_list ) }
+
+            ## Control File(s)
+            #if str($control.c_select) == "Yes":
+				-c ${ ' '.join( $c_file_list ) }
+			#end if
+
+            ## Predefined or Custom Genome
+            #if str($genome.g_select) == "Yes":
+                --genome ${genome.builtin_genome}
+            #else
+                #if str($genome.chromsizes.chr_select) == "No":
+                    #if $genome.chromsizes.cs_file.is_of_type('fasta'):
+                        --chromsizes <(awk '/^>/ {if (seqlen) print seqlen;printf substr($1,2) "\t";seqlen=0;next}
+                            {seqlen+=length($0)}END{print seqlen}' '${genome.chromsizes.cs_file}')
+                    #else
+                        --chromsizes ${genome.chromsizes.cs_file}
+                    #end if
+                #else
+                    #if $genome.chromsizes.builtin_fasta.fields.path
+                        --chromsizes <(awk '/^>/ {if (seqlen) print seqlen;printf substr($1,2) "\t";seqlen=0;next}
+                            {seqlen+=length($0)}END{print seqlen}' '${genome.chromsizes.builtin_fasta.fields.path}')
+                    #end if
+                #end if
+            #end if
+            #if $genome.egf:
+                --effective-genome-fraction ${genome.egf}
+            #end if
+
+			#if $fdr:
+	            -fdr $fdr
+			#end if
+
+        #if str($advanced_options.keep_dupes) == "True":
+            --keep-duplicates
+        #end if
+
+        #if $advanced_options.bin_size:
+            --bin-size $advanced_options.bin_size
+        #end if
+
+        #if $advanced_options.gaps_allowed:
+            --gaps-allowed $advanced_options.gaps_allowed
+        #end if
+
+        #if $advanced_options.fragment_size:
+            --fragment-size $advanced_options.fragment_size
+        #end if
+
+        > ${peaks} 
+		2> >(awk 'NF' >&2)
+
+        #if $to_bed:
+            && 
+            awk 'NR>1{if ($4==0) {pv=50;qv=50}else{pv=-log($4)/log(10);qv=-log($9)/log(10)};
+            print $1,$2,$3,"island_"NR-1,int($5),$6,$10,pv,qv}' OFS="\t" ${peaks} > ${bed_peaks}
+       #end if
+
+    ]]></command>
+	
+    <inputs>
+        <conditional name="treatment">
+            <param name="t_multi_select" type="select" label="Are you pooling Treatment Files?" help="" >
+                <option value="No" selected="True">No</option>
+                <option value="Yes">Yes</option>
+            </param>
+            <when value="No" >
+                <param name="input_treatment_file" argument="-t" type="data" format="bam,sam,bed" label="ChIP-Seq Treatment File" help="(-t)" />
+            </when>
+            <when value="Yes">
+                <param name="input_treatment_file" argument="-t" type="data" format="bam,sam,bed" multiple="true" 
+                       label="ChIP-Seq Treatment File" help="(-t)" />
+            </when>
+        </conditional>
+
+        <conditional name="control">
+            <param name="c_select" type="select" label="Do you have a Control File?" >
+                <option value="Yes">Yes</option>
+                <option value="No" selected="True">No</option>
+            </param>
+            <when value="Yes">
+                <conditional name="c_multiple">
+                    <param name="c_multi_select" type="select" label="Are you pooling Control Files?" help="" >
+                        <option value="No" selected="True">No</option>
+                        <option value="Yes">Yes</option>
+                    </param>
+                    <when value="No" >
+                        <param name="input_control_file" argument="-c" type="data" format="bam,sam,bed" label="ChIP-Seq Control File" help="(-c)" />
+                    </when>
+                    <when value="Yes">
+                        <param name="input_control_file" argument="-c" type="data" format="bam,sam,bed" multiple="true" 
+                               label="ChIP-Seq Control File" help="(-c)" />
+                    </when>
+                </conditional>
+            </when>
+            <when value="No">
+                <param name="evalue" argument="-e" type="integer" optional="True" label="e-value" 
+					   help="The E-value controls the genome-wide error rate of identified islands under the random 
+							 background assumption. Should be used when not using a control library. Default 1000." />
+            </when>
+        </conditional>
+
+        <conditional name="genome">
+            <param name="g_select" type="select" label="Is your genome indexed?" >
+                <option value="Yes">Yes</option>
+                <option value="No" selected="True">No</option>
+            </param>
+            <when value="Yes" >
+                <param name="builtin_genome" argument="--genome" type="text" label="Genome" optional="True" help="(--genome)" >
+                </param>
+            </when>
+            <when value="No">
+                <conditional name="chromsizes">
+                    <param name="chr_select" type="select" label="Do you want to use an indexed fasta file?" 
+                           help="Chromosome sizes will be calculated from the provided fasta file" >
+                        <option value="No">No</option>
+                        <option value="Yes" selected="True">Yes</option>
+                    </param>
+                    <when value="No" >
+                        <param name="cs_file" argument="--chromsizes" type="data" format="fasta,txt,tabular,tsv" label="Chromosome sizes" 
+							   help="Provide a fasta file for automated calculation, or set the chromosome lengths yourself in a file with 
+									 two columns: chromosome names and sizes. (--chromsizes)" />
+                    </when>
+                    <when value="Yes">
+                        <param name="builtin_fasta" argument="--chromsizes" type="select" optional="True" label="Genome fasta file" help="(--chromsizes)" >
+                            <options from_data_table="all_fasta">
+                                <filter type="sort_by" column="2" />
+                                <validator type="no_options" message="No indexes are available" />
+                            </options>
+                        </param>
+                    </when>
+                </conditional>
+                <param name="egf" argument="-egf" type="float" min="0" max="1" optional="True" label="Effective genome fraction." help="(-egf)" />
+            </when>
+        </conditional>
+
+            <param name="fdr" argument="-fdr" type="float" min="0" max="1" optional="True" label="False discovery rate cutoff" help="Default 0.05 (-fdr)" />
+
+            <param name="to_bed" type="boolean" checked="false" label="Print output in bed format?"/>
+        
+        <section name="advanced_options" title="Advanced Options">
+            <param name="keep_dupes" type="boolean" checked="false" truevalue="--keep-duplicates" falsevalue="" label="Keep duplicates?" 
+				   help="Keep reads mapping to the same position on the same strand within a library. (--keep-duplicates)" />
+            <param name="bin_size" argument="--bin-size" type="integer" optional="True" label="Bin size" 
+				   help="Size of the windows to scan the genome. BIN-SIZE is the smallest possible island. Default 200. (--bin-size)" />
+            <param name="gaps_allowed" argument="--gaps-allowed" type="integer" optional="True" label="Gaps allowed" 
+				   help="This number is multiplied by the window size to determine the number of gaps (ineligible windows) allowed 
+						 between two eligible windows. Default 3. (--gaps-allowed)"/>
+            <param name="fragment_size" argument="--fragment-size" type="integer" optional="True" label="Fragment size" 
+				   help="(Single end reads only) Size of the sequenced fragment. Each read is extended half the fragment size from the 5' end. 
+						 Default 150 (i.e. extend by 75). (--fragment-size)" />
+        </section>
+   </inputs>
+
+    <outputs>
+        <data format="tabular" name="peaks" label="${tool.name} on ${on_string}"/>
+        <data format='bed' name='bed_peaks' label="${tool.name} on ${on_string}: BED">
+			<filter>to_bed</filter>
+		</data>
+
+    </outputs>
+
+    <tests>
+        <test>
+        </test>
+    </tests>
+
+    <help>
+		Chip-Seq broad peak/domain finder based on SICER.
+		
+**Accepted input formats**
+
+Input file extension must be bed, bedpe, bam or sam.
+
+**Broad peaks format**
+        
+Original epic2 output does not follow any standard format, then broad peaks bed format is offered. This format follows the standard from ENCODE, BED 6 + 3, and contains the following columns:
+        
+        * **1.** Chrom 
+        * **2.** Start 
+        * **3.** End 
+        * **4.** Name 
+        * **5.** Score 
+        * **6.** Strand 
+        * **7.** log2FoldChange 
+        * **8.** -log10PValue 
+        * **9.** -log10FDR
+        
+.. class:: warningmark
+
+        On columns 8 and 9, the max value is set to 50 when Pvalue == 0.0.
+
+Tool adapted to Galaxy by Miriam Payá Milans. Original documentation on https://github.com/biocore-ntnu/epic2.
+    </help>
+	
+    <citations>
+        <citation type="doi">10.1093/bioinformatics/btz232</citation>
+        <yield />
+    </citations>
+
+</tool>		
