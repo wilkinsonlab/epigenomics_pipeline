@@ -1,0 +1,88 @@
+{
+  "@context": 	["http://schema.org/",
+		     {"swap": "http://www.w3.org/2000/10/swap/pim/doc#"}
+		],
+  "@type": "Dataset",
+  "name": "RNA-Seq Data for Brassica rapa leaf vs. inflorescence ",
+  "url" : "https://github.com/wilkinsonlab/epigenomics_pipeline/METADATA2.json",
+  "mainEntity" : "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA542357",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "description": "RNA Seq of the same samples that were part of the investigation into Histone H3 methylation (METADATA1.json).",
+  "swap:persistencePolicy": "https://github.com/wilkinsonlab/epigenomics_pipeline/PERSISTENCE.md",
+  "keywords": "chromatin, RNA-Seq, Brassica rapa, gene regulation",
+  "sourceOrganization": {
+    "@type": "Organization",
+    "name": "CBGP UPM-INIA",
+    "address": "Centro de Biotecnología y Genómica de Plantas UPM – INIA Parque Científico y Tecnológico de la U.P.M. Campus de Montegancedo Autopista M-40, Km 38 - 28223 Pozuelo de Alarcón (Madrid)",
+    "logo": "http://www.cbgp.upm.es/images/cbgp_logo1.png",
+    "parentOrganization": {
+	"@type": "Organization",
+	"name": "Universidad Politecnica de Madrid (UPM) & Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria (INIA)"
+         }
+    },
+  "author": [{
+	"@type": "Person",
+	"@id": "http://orcid.org/???????????????????????????????????????????",
+	"name": "Miriam Payá Milans",
+	"email":  "miriampami@gmail.com",
+	"familyName": "Payá Milans",
+	"givenName": "Miriam",
+	"honorificPrefix": "Dr."
+	},
+ 	{
+	"@type": "Person",
+	"name": "Laura Poza-Viejo",
+	"familyName": "Poza-Viejo",
+	"givenName": "Laura",
+	"@id": "http://orcid.org/???????????????????????????????????????????"
+	},
+ 	{
+	"@type": "Person",
+	"@id": "http://orcid.org/???????????????????????????????????????????",
+	"name": "Paxti San Martín-Uriz",
+	"familyName": "San Martín-Uriz",
+	"givenName": "Paxti"
+	},
+ 	{
+	"@type": "Person",
+	"@id": "http://orcid.org/???????????????????????????????????????????",
+	"name": "David Lara-Astiaso",
+	"familyName": "Lara-Astiaso",
+	"givenName": "David"
+	},
+	{
+	"@type": "Person",
+	"@id": "http://orcid.org/0000-0001-6960-357X",
+	"name": "Mark D Wilkinson",
+	"email":  "markw@illuminae.com",
+	"familyName": "Wilkinson",
+	"givenName": "Mark Denis",
+	"honorificPrefix": "Dr.",
+	"jobTitle": "BBVA-UPM Industry Chair on Biotechnology & Isaac Peral Distinguished Researcher"
+	},
+	{
+	"@type": "Person",
+	"@id": "http://orcid.org/???????????????????????????????????????????",
+	"name": "Pedro Crevillén",
+	"email":  "crevillen.pedro@inia.es",
+	"familyName": "Crevillén",
+	"givenName": "Pedro",
+	"honorificPrefix": "Dr.",
+	"jobTitle": "Investigador Ramón y Cajal"
+	}
+	],
+    "variableMeasured": "gene expression",
+    "distribution": [
+        {
+	"@type": "DataDownload",
+	"measurementTechnique": "http://purl.obolibrary.org/obo/OBI_0001271",
+	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR???????????????????/",
+	"encodingFormat": "application/octet-stream"
+	}],
+    "about": {
+	"@type": "Thing",
+	"@id": "http://www.uniprot.org/taxonomy/1813537",
+	"description": "Brassica rapa subsp. trilocularis"
+	}
+    
+}
