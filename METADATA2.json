@@ -17,38 +17,44 @@
     "logo": "http://www.cbgp.upm.es/images/cbgp_logo1.png",
     "parentOrganization": {
 	"@type": "Organization",
-	"name": "Universidad Politecnica de Madrid (UPM) & Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria (INIA)"
+	"name": "Universidad Politécnica de Madrid (UPM) & Instituto Nacional de Investigación y Tecnología Agraria y Alimentaria (INIA)"
          }
     },
   "author": [{
 	"@type": "Person",
-	"@id": "http://orcid.org/???????????????????????????????????????????",
+	"@id": "http://orcid.org/0000-0002-7718-9011",
 	"name": "Miriam Payá Milans",
 	"email":  "miriampami@gmail.com",
 	"familyName": "Payá Milans",
 	"givenName": "Miriam",
 	"honorificPrefix": "Dr."
+	"jobTitle": "Postdoctoral researcher"
 	},
  	{
 	"@type": "Person",
 	"name": "Laura Poza-Viejo",
 	"familyName": "Poza-Viejo",
 	"givenName": "Laura",
-	"@id": "http://orcid.org/???????????????????????????????????????????"
+	"@id": "http://orcid.org/0000-0001-6252-3964"
+	"jobTitle": "PhD Student"
 	},
  	{
 	"@type": "Person",
-	"@id": "http://orcid.org/???????????????????????????????????????????",
-	"name": "Paxti San Martín-Uriz",
+	"@id": "",
+	"name": "Patxi San Martín-Uriz",
 	"familyName": "San Martín-Uriz",
 	"givenName": "Paxti"
+	"honorificPrefix": "Dr.",
+	"jobTitle": "Postdoctoral researcher"
 	},
  	{
 	"@type": "Person",
-	"@id": "http://orcid.org/???????????????????????????????????????????",
+	"@id": "",
 	"name": "David Lara-Astiaso",
 	"familyName": "Lara-Astiaso",
 	"givenName": "David"
+	"honorificPrefix": "Dr.",
+	"jobTitle": "Principal Investigator"
 	},
 	{
 	"@type": "Person",
@@ -62,7 +68,7 @@
 	},
 	{
 	"@type": "Person",
-	"@id": "http://orcid.org/???????????????????????????????????????????",
+	"@id": "http://orcid.org/0000-0003-1276-9792",
 	"name": "Pedro Crevillén",
 	"email":  "crevillen.pedro@inia.es",
 	"familyName": "Crevillén",
@@ -76,9 +82,40 @@
         {
 	"@type": "DataDownload",
 	"measurementTechnique": "http://purl.obolibrary.org/obo/OBI_0001271",
-	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR???????????????????/",
+	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR9041387/",
 	"encodingFormat": "application/octet-stream"
-	}],
+	},
+        {
+	"@type": "DataDownload",
+	"measurementTechnique": "http://purl.obolibrary.org/obo/OBI_0001271",
+	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR9041386/",
+	"encodingFormat": "application/octet-stream"
+	},
+        {
+	"@type": "DataDownload",
+	"measurementTechnique": "http://purl.obolibrary.org/obo/OBI_0001271",
+	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR9041388/",
+	"encodingFormat": "application/octet-stream"
+	},
+        {
+	"@type": "DataDownload",
+	"measurementTechnique": "http://purl.obolibrary.org/obo/OBI_0001271",
+	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR9041389/",
+	"encodingFormat": "application/octet-stream"
+	},
+        {
+	"@type": "DataDownload",
+	"measurementTechnique": "http://purl.obolibrary.org/obo/OBI_0001271",
+	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR9041397/",
+	"encodingFormat": "application/octet-stream"
+	},
+        {
+	"@type": "DataDownload",
+	"measurementTechnique": "http://purl.obolibrary.org/obo/OBI_0001271",
+	"contentUrl": "https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR9041396/",
+	"encodingFormat": "application/octet-stream"
+	},
+    ],
     "about": {
 	"@type": "Thing",
 	"@id": "http://www.uniprot.org/taxonomy/1813537",
