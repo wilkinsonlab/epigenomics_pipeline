@@ -22,7 +22,7 @@ docker run \
 mpaya/epigenomics_galaxy:1.0
 ```
 
-This galaxy instance grants admin access to the default user, admin@galaxy.org, with password `admin`.
+After download, galaxy will be available at `localhost:${local_port}`. This galaxy instance gives admin privileges to the default user, admin@galaxy.org with password `admin`.
 
 ### install Brassica genome and run data analysis
 Included is a script that will prepare the environment and conduct the data analysis indicated on the paper. If not specified, the default port used is 8080. 
