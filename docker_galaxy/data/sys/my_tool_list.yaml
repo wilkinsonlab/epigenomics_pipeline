@@ -33,17 +33,7 @@ tools:
   tool_panel_section_label: 'NGS: QC and Manipulation'
   revisions:
   - 'dfa082f84068'  # v0.36.5
-- name: fastq_groomer
-  owner: devteam
-  tool_panel_section_label: 'NGS: QC and Manipulation'
-  revisions:
-  - '71e5fa25b8a2'  # v1.1.1
 
-- name: bwa
-  owner: devteam
-  tool_panel_section_label: 'Mappers and Aligners'
-  revisions:
-  - '01ac0a5fedc3'
 - name: bowtie2
   owner: devteam
   tool_panel_section_label: 'Mappers and Aligners'
@@ -60,18 +50,6 @@ tools:
   tool_panel_section_label: 'NGS: RNA Analysis'
   revisions:
   - '7f5a8d427b39'  # v0.9.1
-
-- name: busco
-  owner: iuc
-  tool_panel_section_label: 'NGS: Assembly'
-  revisions:
-  - 'f18f0b887c31'  # v3.0.2
-  install_tool_dependencies: True
-- name: quast
-  owner: iuc
-  tool_panel_section_label: 'NGS: Assembly'
-  revisions:
-  - 'f30d03867854'  # v5.0.2+galaxy0
 
 - name: macs2
   owner: iuc
@@ -95,12 +73,6 @@ tools:
   revisions:
   - 5b673ccc8747
   install_tool_dependencies: True
-
-- name: bedtools
-  owner: iuc
-  tool_panel_section_label: 'BEDtools'
-  revisions:
-  - dde39ba9c031
 
 - name: picard
   owner: devteam
@@ -136,14 +108,6 @@ tools:
   owner: devteam
   revisions:
   - 83da94c0e4a6
-- name: data_manager_bwa_mem_index_builder
-  owner: devteam
-  revisions:
-  - 46066df8813d
-- name: data_manager_fetch_busco
-  owner: iuc
-  revisions:
-  - 53eec20e8fb6
 - name: data_manager_fetch_gene_annotation
   owner: scottx611x
   revisions:
@@ -156,7 +120,3 @@ tools:
   owner: ieguinoa
   revisions:
   - c57bd7f3fb46
-- name: data_manager_manual
-  owner: iuc
-  revisions:
-  - 6524e573d9c2 
