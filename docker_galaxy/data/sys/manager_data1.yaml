@@ -4,7 +4,7 @@ genomes:
   - id: Brapa_chiifu_v3.0
     name: Brassica_rapa Chiifu (Brapa_chiifu_v3.0)
     url: http://brassicadb.org/brad/datasets/pub/BrassicaceaeGenome/Brassica_rapa/V3.0/Brapa_sequence_v3.0.fasta.gz
-    path: ../files/Brapa_chiifu_v3.0.fa.gz
+    path: /galaxy-central/lib/brassica_data/files/Brapa_chiifu_v3.0.fa.gz
 
 data_managers:
     # Data manager ID

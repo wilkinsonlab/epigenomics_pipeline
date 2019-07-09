@@ -13,14 +13,14 @@ GALAXY_RESULTS=../../../analysis/galaxy-res && \
 
 ## prepare python
 a=$(pip freeze | grep bioblend)
-if [ ! -z $a ]; 
+if [ -z $a ]; 
 then 
     echo bioblend not installed, installing bioblend
     pip install bioblend
 fi
 
 a=$(pip freeze | grep ephemeris)
-if [ ! -z $a ]; 
+if [ -z $a ]; 
 then 
     echo ephemeris not installed, installing ephemeris
     pip install ephemeris

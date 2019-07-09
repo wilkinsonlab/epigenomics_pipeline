@@ -51,7 +51,7 @@ iw2 = gi.workflows.import_workflow_dict(ew2)
 
 # create library to upload files
 print("uploading files to galaxy")
-file_path = "/data/files/"
+file_path = "./files/"
 my_lib = gi.libraries.create_library('Brapa_lib', description='B. rapa data', synopsis=None)
 lib_sra1 = gi.libraries.upload_file_from_local_path(my_lib['id'], file_path + "SRA01", folder_id=None, file_type='txt', dbkey='Brapa_chiifu_v3.0')
 lib_sra2 = gi.libraries.upload_file_from_local_path(my_lib['id'], file_path + "SRA02", folder_id=None, file_type='txt', dbkey='Brapa_chiifu_v3.0')
