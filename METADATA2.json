@@ -27,7 +27,7 @@
 	"email":  "miriampami@gmail.com",
 	"familyName": "Payá Milans",
 	"givenName": "Miriam",
-	"honorificPrefix": "Dr."
+	"honorificPrefix": "Dr.",
 	"jobTitle": "Postdoctoral researcher"
 	},
  	{
@@ -35,7 +35,7 @@
 	"name": "Laura Poza-Viejo",
 	"familyName": "Poza-Viejo",
 	"givenName": "Laura",
-	"@id": "http://orcid.org/0000-0001-6252-3964"
+	"@id": "http://orcid.org/0000-0001-6252-3964",
 	"jobTitle": "PhD Student"
 	},
  	{
@@ -43,7 +43,7 @@
 	"@id": "",
 	"name": "Patxi San Martín-Uriz",
 	"familyName": "San Martín-Uriz",
-	"givenName": "Paxti"
+	"givenName": "Paxti",
 	"honorificPrefix": "Dr.",
 	"jobTitle": "Postdoctoral researcher"
 	},
@@ -52,7 +52,7 @@
 	"@id": "",
 	"name": "David Lara-Astiaso",
 	"familyName": "Lara-Astiaso",
-	"givenName": "David"
+	"givenName": "David",
 	"honorificPrefix": "Dr.",
 	"jobTitle": "Principal Investigator"
 	},
