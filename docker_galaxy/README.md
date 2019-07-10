@@ -1,4 +1,4 @@
-This galaxy instance has tools and workflows aimed at the analysis of epigenomics data, both ChIP-Seq and RNA-Seq. A script is provided to install Brassica genome and run the data analysis from paper xxx.
+This galaxy instance has tools and workflows aimed at the analysis of epigenomics data, both ChIP-Seq and RNA-Seq. A script is provided to install Brassica genome and run the data analysis from paper (Submitted).
 
 ## Instructions
 ### prepare environment
