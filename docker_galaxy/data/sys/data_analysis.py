@@ -58,12 +58,6 @@ lib_sra2 = gi.libraries.upload_file_from_local_path(my_lib['id'], file_path + "S
 lib_sra3 = gi.libraries.upload_file_from_local_path(my_lib['id'], file_path + "SRA03", folder_id=None, file_type='txt', dbkey='Brapa_chiifu_v3.0')
 lib_gff = gi.libraries.upload_file_from_local_path(my_lib['id'], file_path + "Brapa_3.0_myUTR.gff", folder_id=None, file_type='gff3', dbkey='Brapa_chiifu_v3.0')
 
-# transfer files from library to histories
-dat1 = gi.histories.upload_dataset_from_library(hist_1['id'], lib_sra1[0]['id'])
-dat2 = gi.histories.upload_dataset_from_library(hist_2['id'], lib_sra2[0]['id'])
-dat3 = gi.histories.upload_dataset_from_library(hist_3['id'], lib_sra3[0]['id'])
-dat4 = gi.histories.upload_dataset_from_library(hist_3['id'], lib_gff[0]['id'])
-
 # run with data from library
 print("run analysis")
 wf_input1 = {'0': {'id': lib_sra1[0]['id'], 'src': 'ld'}}
