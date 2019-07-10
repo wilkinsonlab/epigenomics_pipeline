@@ -27,5 +27,6 @@ After download, galaxy will be available at `localhost:${local_port}`. This gala
 ### install Brassica genome and run data analysis
 Included is a script that will prepare the environment and conduct the data analysis indicated on the paper. If not specified, the default port used is 8080. 
 ```
-bash ~/DockerFolders/"${dir_name}"/galaxy-central/lib/brassica_data/run_analysis.sh ${local_port}
+cd ~/DockerFolders/"${dir_name}"/galaxy-central/lib/brassica_data/
+bash run_analysis.sh ${local_port}
 ```
