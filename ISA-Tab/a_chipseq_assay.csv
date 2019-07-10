@@ -1,0 +1,7 @@
+"Sample Name"	"Factor Value[tissue,http://purl.obolibrary.org/obo/UBERON_0000479,UBERON]"	"Term Source REF"	"Term Accession Number"	"Protocol REF"	"Comment[Input_vs_Sample]"	"Assay Name"	"Raw Data File"	"Factor Value[UBERON:tissue,http://purl.obolibrary.org/obo/UBERON_0000479,UBERON]"	"Term Source REF"	"Term Accession Number"
+"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494"	"inflorescence"	"BTO"	""	""	"Input"	"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494.Extract-1.LE-1.ASSAY-1"	"SRR9041395"	""	""	""
+"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494"	"inflorescence"	"BTO"	""	""	"H3K27me3_I"	"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494.Extract-1.LE-1.ASSAY-1"	"SRR9041394"	""	""	""
+"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619493"	"leaf"	"BTO"	"http://purl.obolibrary.org/obo/BTO_0000713"	""	"Input_L2"	"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494.Extract-1.LE-1.ASSAY-1"	"SRR9041393"	""	""	""
+"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619493"	"leaf"	"BTO"	"http://purl.obolibrary.org/obo/BTO_0000713"	""	"H3K27me3_L2"	"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494.Extract-1.LE-1.ASSAY-1"	"SRR9041392"	""	""	""
+"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619493"	"leaf"	"BTO"	"http://purl.obolibrary.org/obo/BTO_0000713"	""	"Input_L1"	"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494.Extract-1.LE-1.ASSAY-1"	"SRR9041391"	""	""	""
+"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619493"	"leaf"	"BTO"	"http://purl.obolibrary.org/obo/BTO_0000713"	""	"H3K27me3_L1"	"CBGP UPM-INIA.Group-1.Subject-1.sSAMN11619494.Extract-1.LE-1.ASSAY-1"	"SRR9041390"	""	""	""
