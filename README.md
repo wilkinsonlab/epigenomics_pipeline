@@ -1,7 +1,5 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3298029.svg)](https://doi.org/10.5281/zenodo.3298029)
 
-![Docker Build Status](https://img.shields.io/docker/build/mpaya/epigenomics_galaxy.svg)
-
 
 # Epigenomics Workflow on Galaxy and Jupyter
 
@@ -86,8 +84,8 @@ The epigenomics Jupyter image is based on `jupyter/datascience-notebook` ([link]
     * ngs.plot
     * Miniconda 2 and 3
 * Notebooks
-    * 1. Bash notebook for differential binding analysis and ChIP-Seq data plotting
-    * 2. R notebook for results annotation and visualization
+    1. Bash notebook for differential binding analysis and ChIP-Seq data plotting
+    2. R notebook for results annotation and visualization
 
 #### Quick start
 Running a container on a local machine automatically opens Jupyter in a web browser. In Jupyter, the export folder is `~/work`.
