@@ -1,5 +1,8 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3298029.svg)](https://doi.org/10.5281/zenodo.3298029)
 
+[__biotools:Epigenomics_Workflow_on_Galaxy_and_Jupyter__](https://bio.tools/Epigenomics_Workflow_on_Galaxy_and_Jupyter)
+
+[__Epigenomics Workflow on Galaxy and Jupyter, RRID:SCR_017544__](https://scicrunch.org/browse/resourcedashboard)
 
 # Epigenomics Workflow on Galaxy and Jupyter
 
