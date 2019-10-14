@@ -97,7 +97,7 @@ docker run \
 -p 8888:8888 \
 --name nb1 \
 -v ~/DockerFolders/run_v1/analysis:/home/jovyan/work \
-mpaya/epigenomics_jupyter:1.0
+mpaya/epigenomics_jupyter:2.0
 ```
 To continue with _Brassica_ analysis, `~/work` is mapped to the `analysis` folder created when running the _Brassica_ data analysis on Galaxy for Jupyter to find and load results.
 
