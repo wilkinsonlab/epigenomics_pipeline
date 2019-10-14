@@ -1,5 +1,9 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3298029.svg)](https://doi.org/10.5281/zenodo.3298029)
 
+[__biotools:Epigenomics_Workflow_on_Galaxy_and_Jupyter__](https://bio.tools/Epigenomics_Workflow_on_Galaxy_and_Jupyter)
+
+[__Epigenomics Workflow on Galaxy and Jupyter, RRID:SCR_017544__](https://scicrunch.org/browse/resourcedashboard)
+
 
 # Epigenomics Workflow on Galaxy and Jupyter
 
@@ -94,7 +98,7 @@ docker run \
 -p 8888:8888 \
 --name nb1 \
 -v ~/DockerFolders/run_v1/analysis:/home/jovyan/work \
-mpaya/epigenomics_jupyter:1.0
+mpaya/epigenomics_jupyter:2.0
 ```
 To continue with _Brassica_ analysis, `~/work` is mapped to the `analysis` folder created when running the _Brassica_ data analysis on Galaxy for Jupyter to find and load results.
 

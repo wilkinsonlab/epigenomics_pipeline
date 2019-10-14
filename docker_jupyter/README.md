@@ -15,7 +15,7 @@ docker run \
 -p ${local_port}:8888 \
 --name "${cont_name}" \
 -v ~/DockerFolders/"${dir_name}"/analysis:/home/jovyan/work \
-mpaya/epigenomics_jupyter:1.0
+mpaya/epigenomics_jupyter:2.0
 ```
 
 ### Retrieve token of running notebook
