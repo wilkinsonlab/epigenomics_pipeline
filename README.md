@@ -4,7 +4,6 @@
 
 [__Epigenomics Workflow on Galaxy and Jupyter, RRID:SCR_017544__](https://scicrunch.org/browse/resourcedashboard)
 
-
 # Epigenomics Workflow on Galaxy and Jupyter
 
 Over the last decade, extensive epigenomics data is being generated. Data analysis may be challenging, and usually requires bioinformatics knowledge. Here, we present a 2-step full pipeline for combined ChIP-Seq and RNA-Seq data analysis.
