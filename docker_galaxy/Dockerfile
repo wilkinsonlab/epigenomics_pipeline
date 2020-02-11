@@ -12,7 +12,7 @@ RUN for f in "--upgrade pip" pysam cython conda epic2==0.0.14; do pip install $f
 RUN sed 's;.*admin_users:.*;  admin_users: admin@galaxy.org;' /galaxy-central/config/galaxy.yml.sample > /galaxy-central/config/galaxy.yml
 
 ## import data
-ENV data_path=/galaxy-central/lib/brassica_data
+ENV data_path=/galaxy-central/lib/image_data
 ADD data ${data_path}
 
 ## install tools
@@ -26,9 +26,6 @@ RUN install-workflows ${data_path}/workflows
 ## set export path for export_to_cluster tool
 RUN export_prefix=/tool_deps/environment_settings/EXPORT_DIR_PREFIX/earlhaminst/export_to_cluster/9838eed606ad/env.sh && \
     sed -i.bak 's:=;:=/export/analysis;:' "$export_prefix"
-
-## include script to run analysis
-ADD run_analysis.sh ${data_path}/
 
 # Autostart script that is invoked during container start
 CMD ["/usr/bin/startup"]

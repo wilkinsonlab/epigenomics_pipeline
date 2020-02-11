@@ -1,0 +1,25 @@
+# configuration for fetch and index genomes
+
+genomes:
+  - id: test_genome
+    name: test_genome
+
+data_managers:
+    - id: sam_fasta_index_builder
+      params:
+        - 'all_fasta_source': '{{ item.id }}'
+        - 'sequence_name': '{{ item.name }}'
+        - 'sequence_id': '{{ item.id }}'
+      items: "{{ genomes }}"
+      data_table_reload:
+        - fasta_indexes
+
+    - id: toolshed.g2.bx.psu.edu/repos/devteam/data_manager_bowtie2_index_builder/bowtie2_index_builder_data_manager/2.3.0
+      params:
+        - 'all_fasta_source': '{{ item.id }}'
+        - 'sequence_name': '{{ item.name }}'
+        - 'sequence_id': '{{ item.id }}'
+        - 'tophat2': 'False'
+      items: "{{ genomes }}"
+      data_table_reload:
+        - bowtie2_indexes

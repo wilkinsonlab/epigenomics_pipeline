@@ -38,7 +38,7 @@ tools:
   owner: devteam
   tool_panel_section_label: 'Mappers and Aligners'
   revisions:
-  - '17062a0decb7'  # v2.3.4.2
+  - '749c918495f7'  # v2.3.4.3+galaxy0
 
 - name: deseq2
   owner: iuc
@@ -60,7 +60,7 @@ tools:
   owner: mpaya
   tool_panel_section_label: 'NGS: Peak Calling'
   revisions:
-  - '8b4cb7f52809'  # v1.0.0
+  - 'ea03253198b4'  # v0.0.41
 
 - name: samtool_filter2
   owner: devteam

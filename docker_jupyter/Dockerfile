@@ -1,9 +1,6 @@
-FROM jupyter/datascience-notebook:abdb27a6dfbb
+FROM jupyter/datascience-notebook:414b5d749704
 MAINTAINER m.paya@upm.es
 USER root
-
-## Load data
-ADD data/ /data/
 
 ## Install system packages
 RUN apt-get update && \
@@ -12,7 +9,7 @@ RUN apt-get update && \
 
 ## Install R packages
 USER jovyan
-RUN echo 'install.packages(c("scales","gridExtra","BiocManager","fields","GGally"),repos="http://cran.r-project.org" )' | R --no-save
+RUN echo 'install.packages(c("scales","gridExtra","BiocManager","fields","GGally","stringi"),repos="http://cran.r-project.org" )' | R --no-save
 RUN echo 'BiocManager::install(c("GenomicFeatures", "ChIPpeakAnno","ShortRead"),ask = FALSE)' | R --no-save
 
 ## Install bash kernel
@@ -36,12 +33,13 @@ RUN cd /software && \
     git clone https://github.com/shao-lab/MAnorm.git && \
     cd MAnorm && ${CONDA2}/pip install .
 
-## install deeptools within conda environment
+## install tools within conda environment
 RUN conda create --name deeptools python=3.7 deeptools=3.3.1 -c bioconda
+RUN conda create --name samtools python=3.7 samtools=1.9 -c bioconda
 
 ## install ngs.plot
+COPY data/ngsplot-2.61.tar.gz /software/ngsplot-2.61.tar.gz
 RUN cd /software && \
-    mv /data/ngsplot-2.61.tar.gz . && \
     tar xzf ngsplot-2.61.tar.gz
 ENV PATH="/software/ngsplot/bin:${PATH}"
 ENV NGSPLOT /software/ngsplot
@@ -54,7 +52,7 @@ ENV NB_UID 1000
 ENV HOME /home/${NB_USER}
 
 USER root
-RUN mv /data/notebooks/ ${HOME}/notebooks
+ADD data/notebooks/ ${HOME}/notebooks
 RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 

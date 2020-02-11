@@ -11,7 +11,7 @@ Over the last decade, extensive epigenomics data is being generated. Data analys
 ## Contents
 
 Two Docker images were prepared to run the analysis in a coordinated way. 
-* First, a container running Galaxy will run the bulk analysis of ChIP-Seq and RNA-Seq data. The workflows are designed to download data from SRA and export results locally. Major steps in workflows are:
+* First, a container running Galaxy will run the bulk analysis of ChIP-Seq and RNA-Seq data. The workflows are designed to use local read data or from SRA and to export results locally. Major steps in these workflows are:
     * Trimming with Trimmomatic
     * Mapping with Bowtie2
     * __ChIP-Seq__:
@@ -35,7 +35,7 @@ Additionally, a script is provided to specifically run data analysis on a _Brass
 
 ## Usage
 
-### Docker
+### Docker commands
 To use the images, Docker needs to be installed in the system ([link to documentation](https://docs.docker.com/install/)). Basic docker commands are:
 * `docker images`: show all downloaded/built images.
 * `docker run`: download (if needed) and run a docker image. A container is launched as an instance of that image. Multiple options are available to handle the interaction between local system and container.
@@ -49,29 +49,42 @@ To use the images, Docker needs to be installed in the system ([link to document
 
 ### Galaxy in Docker
 The epigenomics Galaxy image is based on `bgruening/galaxy-stable` ([link](https://github.com/bgruening/docker-galaxy-stable)). The key additions are:
-* The default user has administrative permissions 
+* The default user has administrative privileges 
 * Tools to run the epigenomics analysis are pre-installed
 * Workflows are provided to run ChIP-Seq and RNA-Seq data analysis
-* Accessory files to run _Brassica_ data analysis
+* Accessory files to run _Brassica rapa_ data analysis
 
-The workflows are designed to start from two-column text files indicating SRA accession numbers on the first column and file names on the second column. The default workflows use paired-end reads ChIP-Seq data and single-end reads RNA-Seq data. They can be customized to modify this behavior.
+The workflows are designed to start from `.fastq` files or two-column text files indicating SRA accession numbers on the first column and file names on the second column. The default workflows use paired-end reads for ChIP-Seq data and single-end reads for RNA-Seq data. They can be customized to modify this behavior.
 
 #### Quick start
 Initialize the container.
-```
-mkdir -p ~/DockerFolders/run_v1
+```bash
+## prepare local directory to contain galaxy
+local_path=~/DockerFolders/run_v1  # name for the export directory
+mkdir -p "${local_path}"
+
+## run the container
+cont_name=run1
+port=8080
 
 docker run \
 -d \
--v ~/DockerFolders/run_v1:/export/ \
--p 8080:80 \
+-v "${local_path}":/export/ \
+-p $port:80 \
 --name "${cont_name}" \
-mpaya/epigenomics_galaxy:1.0
+mpaya/epigenomics_galaxy:2.5
+
+## after download, open web browser
+xdg-open http://localhost:$port/
 ```
-Run _Brassica_ data analysis.
+Run test (may take 10-15 min)
+```bash
+bash ${local_path}/galaxy-central/lib/image_data/run_test.sh $port
 ```
-cd ~/DockerFolders/run_v1/galaxy-central/lib/brassica_data/
-bash run_analysis.sh 8080
+Or create the filesystem tree for the Galaxy export tool before running any workflows.
+```
+galaxy_res="${local_path}"/analysis/galaxy-res
+mkdir -m 777 -p $galaxy_res/{chipseq1,chipseq2,rnaseq}
 ```
 
 ### Jupyter in Docker
@@ -87,20 +100,24 @@ The epigenomics Jupyter image is based on `jupyter/datascience-notebook` ([link]
     * ngs.plot
     * Miniconda 2 and 3
 * Notebooks
-    1. Bash notebook for differential binding analysis and ChIP-Seq data plotting
-    2. R notebook for results annotation and visualization
+    * Two bash notebooks for differential binding analysis and ChIP-Seq data plotting
+    * An R notebook for the annotation and visualization of results
 
 #### Quick start
-Running a container on a local machine automatically opens Jupyter in a web browser. In Jupyter, the export folder is `~/work`.
-```
-docker run \
--p 8888:8888 \
---name nb1 \
--v ~/DockerFolders/run_v1/analysis:/home/jovyan/work \
-mpaya/epigenomics_jupyter:2.0
-```
-To continue with _Brassica_ analysis, `~/work` is mapped to the `analysis` folder created when running the _Brassica_ data analysis on Galaxy for Jupyter to find and load results.
+Running this container for the first time on a local machine automatically opens Jupyter in a web browser. In Jupyter, the export folder is `~/work`. To continue with the data analysis from Galaxy, `~/work` is mapped to the `analysis` folder where the workflows have exported the results.
+```bash
+local_path=~/DockerFolders/run_v1
+analysis_dir="${local_path}"/analysis
+jup_name=nb1
+jup_port=8888
 
+docker run \
+-p $jup_port:8888 \
+--name $jup_name \
+-v "${analysis_dir}":/home/jovyan/work \
+mpaya/epigenomics_jupyter:2.5
+```
+After running the three notebooks in consecutive order, results will be available at `$analysis_dir/jupyter-res`.
 
 ## Output
 Results are stored on the folder first created when running Galaxy, in this example `~/DockerFolders/run_v1/analysis`. In summary, results consist of:
