@@ -1,9 +1,6 @@
 # Galaxy Workflows for Epigenomics Data Analysis
 This galaxy instance has installed tools and workflows aimed at the analysis of epigenomics data from both ChIP-Seq and RNA-Seq experiments. It is provided in a [Docker image](https://hub.docker.com/r/mpaya/epigenomics_galaxy) to facilitate download of a container with the full installation of Galaxy and required tools to execute the workflows. Data analysis is followed by the processes described in the notebooks provided with the image [`mpaya/epigenomics_jupyter`](https://hub.docker.com/r/mpaya/epigenomics_jupyter).
 
-These containers were prepared to document and reproduce the data analysis performed on _Brassica rapa_ from our paper.
-* Payá-Milans, M., Poza-Viejo, L., Martín-Uriz, P. S., Lara-Astiaso, D., Wilkinson, M. D., & Crevillén, P. (2019). [**Genome-wide analysis of the H3K27me3 epigenome and transcriptome in _Brassica rapa_.**](https://academic.oup.com/gigascience/article/8/12/giz147/5652252) GigaScience, 8(12). doi: [10.1093/gigascience/giz147](https://doi.org/10.1093/gigascience/giz147)
-
 ## Instructions
 ### Prepare the environment
 When running docker-galaxy linking to a local directory, this will be created by docker under root user. Creating the target directory in advance facilitates handling of permissions.
@@ -48,7 +45,7 @@ bash ${local_path}/galaxy-central/lib/image_data/run_test.sh $port
 The results are exported to `${local_path}/analysis/galaxy-res`. If not specified, the default port used is 8080. 
 
 ### Install _Brassica rapa_ genome and run data analysis
-The original purpose of preparing this container was to report the methodology followed on our research, where we were searching for genes changing histone methylation for H3K27me3 and gene expression. Thus, we included is a script that prepares the environment and reproduces the data analysis indicated on our paper. The following command installs the _B. rapa chiifu_ v3.0 genome and workflows to download our _B. rapa_ reads from SRA archive and execute the analysis, including the version of epic2 0.0.14, originally used on the paper. 
+The original purpose of preparing this container was to report the methodology followed on [our research](https://doi.org/10.1093/gigascience/giz147), where we were searching for genes changing histone methylation for H3K27me3 and gene expression. Thus, we included a script that prepares the environment and reproduces the data analysis indicated on our paper. The following command installs the _B. rapa chiifu_ v3.0 genome and workflows to download our _B. rapa_ reads from SRA archive and execute the analysis, including the version of epic2 0.0.14, originally used on the paper. 
 ```bash
 bash ${local_path}/galaxy-central/lib/image_data/brassica_data/run_analysis.sh $port
 ```
