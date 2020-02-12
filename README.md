@@ -31,7 +31,7 @@ Two Docker images were prepared to run the analysis in a coordinated way.
         * Combination of ChIP-Seq and RNA-Seq results
         * Generation of tables and figures
 
-These containers were prepared during the study of the epigenome of _Brassica rapa_ to analyze ChIP-Seq (histone mark H3K27me3) and RNA-Seq data. For reproducibility, steps to repeat the original analysis described in our paper are included (instrucitons on container descriptions).
+These containers were prepared during the study of the epigenome of _Brassica rapa_ to analyze ChIP-Seq (broad histone mark H3K27me3) and RNA-Seq data. For reproducibility, steps to repeat the original analysis described in our paper are included (instructions on container descriptions).
 * Payá-Milans, M., Poza-Viejo, L., Martín-Uriz, P. S., Lara-Astiaso, D., Wilkinson, M. D., & Crevillén, P. (2019). [**Genome-wide analysis of the H3K27me3 epigenome and transcriptome in _Brassica rapa_.**](https://academic.oup.com/gigascience/article/8/12/giz147/5652252) GigaScience, 8(12). doi: [10.1093/gigascience/giz147](https://doi.org/10.1093/gigascience/giz147)
 
 ## Usage
