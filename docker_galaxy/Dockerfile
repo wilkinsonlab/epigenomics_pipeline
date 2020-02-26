@@ -25,7 +25,7 @@ RUN install-workflows ${data_path}/workflows
 
 ## set export path for export_to_cluster tool
 RUN export_prefix=/tool_deps/environment_settings/EXPORT_DIR_PREFIX/earlhaminst/export_to_cluster/9838eed606ad/env.sh && \
-    sed -i.bak 's:=;:=/export/analysis;:' "$export_prefix"
+    sed -i.bak 's:=;:=/export;:' "$export_prefix"
 
 # Autostart script that is invoked during container start
 CMD ["/usr/bin/startup"]
