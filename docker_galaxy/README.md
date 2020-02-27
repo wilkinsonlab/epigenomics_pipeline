@@ -8,12 +8,12 @@ When running docker-galaxy linking to a local directory, this will be created by
 local_path=~/DockerFolders/run_v1  # name for the export directory
 mkdir -p "${local_path}"
 ```
-The workflows contain a tool to export some of the results to this path. Since Galaxy is unable to create these export folders, they are created manually with permissions to allow all users to write on them (both Galaxy and Jupyter containers use custom users to write data). This file system is also recreated when running the test script.
+The workflows contain a tool to export some of the results to this path. Since Galaxy is unable to create these export folders, they are created manually with permissions to allow all users to write on them (both Galaxy and Jupyter containers use custom users to write data). This file system is also created when running the test script.
 ```bash
 galaxy_res="${local_path}"/analysis/galaxy-res
 mkdir -m 777 -p $galaxy_res/{chipseq1,chipseq2,rnaseq}/bam_files
 ```
-The modification of this path should be followed by the modification of the export path on the workflows, to ensure proper download of Galaxy results, and on the Jupyter notebooks, to find them.
+The modification of this path should be done with care, being followed by the modification of the export path on the workflows to ensure proper download of Galaxy results (see below) and, as needed, on the `docker run` instruction or inside the Jupyter notebooks - in this example, Jupyter docker is mounted on `analysis` and searches files on the indicated subdirectories.
 
 ### Download and activate the container
 The docker-galaxy container will be run on daemon mode, mapping an export directory to a local path where results can be easily accessed, and mapping the web page (accessed in port 80 within the container) to a local port where the galaxy instance can be viewed.
@@ -37,19 +37,45 @@ This galaxy instance can be accessed with admin privileges.
 * Default user: `admin@galaxy.org`
 * Password: `admin`
 
-### Run test
+#### Run test
 Some test data is prepared to confirm that the workflows work as expected. These data consist of PE ChIP-Seq and SE RNA-Seq reads in `.fastq` format, and some genomic resources (sequence in fasta format, gene annotations in gff and bed formats, functional annotations as table). A script is prepared to run Galaxy commands using the API, installing bioblend and ephemeris python packages if needed and using them to install the test genome and run the workflows with the test data from a python script. This test may take 10-15 min depending on resources.
 ```bash
 bash ${local_path}/galaxy-central/lib/image_data/run_test.sh $port
 ```
 The results are exported to `${local_path}/analysis/galaxy-res`. If not specified, the default port used is 8080. 
 
-### Install _Brassica rapa_ genome and run data analysis
+#### Use custom genome
+On the Admin section in the Galaxy GUI, Local data, there are different Data Manager Tools that can be used to install custom genomes and generate DBKey, FASTA index and Bowtie2 index, that will be used by various tools in the workflows. Additional files that are used by Jupyter are included here.
+
+```bash
+base=~/libraries/Arabidopsis_thaliana_TAIR10
+fasta=Arabidopsis_thaliana_TAIR10.fa
+gff=Araport11_GFF3_genes_transposons.201606.gff
+anno=Araport11_genes_annot.txt
+
+bed=Araport11_GFF3_genes_transposons.genes.bed
+awk 'NR>1&&$3=="gene"{print $1, $4-1,$5,substr($9, 4, 9)}' OFS='\t' \
+   $base/$gff > $base/$bed
+
+libdir=$(dirname ${galaxy_res})/lib/ath
+mkdir -p $(eval echo $libdir)
+for d in $(eval echo $libdir)
+do
+  cp $base/$fasta $d/genome.fa
+  cp $base/$gff $d/genes.gff
+  cp $base/$anno $d/genes.annot
+  cp $base/$bed $d/genes.bed
+done
+```
+In this example, the genome file will be accessible to Galaxy under `/export/analysis/lib/ath/genome.fa`. If creating the dbkey with copy of original data, Fasta files in `lib` can deleted after creation. Note that lib path in notebooks will require manual modification.
+
+#### Install _Brassica rapa_ genome and run data analysis
 The original purpose of preparing this container was to report the methodology followed on [our research](https://doi.org/10.1093/gigascience/giz147), where we were searching for genes changing histone methylation for H3K27me3 and gene expression. Thus, we included a script that prepares the environment and reproduces the data analysis indicated on our paper. The following command installs the _B. rapa chiifu_ v3.0 genome and workflows to download our _B. rapa_ reads from SRA archive and execute the analysis, including the version of epic2 0.0.14, originally used on the paper. 
 ```bash
 bash ${local_path}/galaxy-central/lib/image_data/brassica_data/run_analysis.sh $port
 ```
 The results are exported to `${local_path}/bra_analysis/galaxy-res`. If not specified, the default port used is 8080. 
+
 
 ### Cleanup
 Galaxy exports each file with the name preceded by the history element number. i.e. if a same workflow is run twice, results will stack instead of overwrite, and won't be properly processed on Jupyter. This may be avoided by running a Galaxy instance each time on a different location, or modyfing the export folder in the workflows each time. Here we propose copying files to a different location and re-building the export folders. 
@@ -65,7 +91,7 @@ rm -fr "${local_path}"/analysis/galaxy-res
 
 # prepare fresh file system 
 galaxy_res="${local_path}"/analysis/galaxy-res
-mkdir -m 777 -p $galaxy_res/{chipseq1,chipseq2,rnaseq}
+mkdir -m 777 -p $galaxy_res/{chipseq1,chipseq2,rnaseq}/bam_files
 ```
 
 #### Full cleanup
