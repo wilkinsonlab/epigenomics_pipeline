@@ -11,7 +11,7 @@ mkdir -p "${local_path}"
 The workflows contain a tool to export some of the results to this path. Since Galaxy is unable to create these export folders, they are created manually with permissions to allow all users to write on them (both Galaxy and Jupyter containers use custom users to write data). This file system is also recreated when running the test script.
 ```bash
 galaxy_res="${local_path}"/analysis/galaxy-res
-mkdir -m 777 -p $galaxy_res/{chipseq1,chipseq2,rnaseq}
+mkdir -m 777 -p $galaxy_res/{chipseq1,chipseq2,rnaseq}/bam_files
 ```
 The modification of this path should be followed by the modification of the export path on the workflows, to ensure proper download of Galaxy results, and on the Jupyter notebooks, to find them.
 
@@ -110,18 +110,18 @@ In this workflow, the first column of the SRA list is cut and used as input for 
 
 ### Galaxy tools that require user input
 * Bowtie2
-** Reference genome
+  * Reference genome
 * 3 X Collect Alignment Summary Metrics
-** Reference genome
+  * Reference genome
 * epic2
-** Reference genome
-** Effective genome fraction 
-** Gap size
+  * Reference genome
+  * Effective genome fraction 
+  * Gap size
 * MACS2
-** Effective genome size
-** Composite broad regions
+  *   Effective genome size
+  * Composite broad regions
 * 3 X bamCoverage
-** Effective genome size
+  * Effective genome size
 
 
 ## RNA-Seq
@@ -144,36 +144,54 @@ Fastq reads are downloaded from NCBI using the SRA identifiers on the list, whic
 
 ### Galaxy tools that require user input
 * Bowtie2
-** Reference genome
+  * Reference genome
 * Collect Alignment Summary Metrics
-** Reference genome
+  * Reference genome
 * htseq-count (default Yes)
-** Strandedness
+  * Strandedness
 * DESeq2
-** Factor names
+  * Factor names
 
 
 ## Modification of the export directory on workflows.
-By default, the tool 'Export datasets to cluster' points to `/export/analysis/galaxy-res/chipseq1` / `chipseq2`, or `/export/analysis/galaxy-res/rnaseq`, by experiment, to save some results produced by the workflows. The paths can be modified manually, taking into account that this path has to be local to the Galaxy container, i.e. starting by `/export` which would correspond to `$local_path` when running the container. Besides manually modifying this path using the Galaxy GUI, two options for the command line are:
+By default, the tool 'Export datasets to cluster' points to `/export/analysis/galaxy-res/chipseq1`, `chipseq2`, or `rnaseq`, by experiment, to save some results produced by the workflows. The paths can be modified manually, taking into account that this path has to be local to the Galaxy container, i.e. starting by `/export` which would correspond to `$local_path` when running the container. Besides manually modifying this path using the Galaxy GUI, two options for the command line are:
 
-* Modify the path on a `.ga` workflow file and upload to galaxy
+* Modify the path on `.ga` workflow files and upload to galaxy
 * Change the path on `Export datasets to cluster` tool using the Galaxy API.
 
 ### Bash solution
-Path may be modified with simple substitution command. 
+Export path may be modified with a substitution command, such as `sed`. Each workflow has a unique identifier that prevents the upload of a workflow with the same id. Thus, If modifying the workflows, the id also needs to be modifyed. Here this is achieved by changing one of the first 10 numbers in the id by a random a-f letter.
 ```bash
+## paths to workflows
 wf_dir=$local_path/galaxy-central/lib/image_data/workflows
-w1=Galaxy-Workflow-ChIP-Seq_analysis_from_fastq.ga
-w2=Galaxy-Workflow-RNA-Seq_analysis_from_fastq.ga
+w1=ChIP-Seq_analysis_from_fastq-1.ga
+w2=ChIP-Seq_analysis_from_fastq-2.ga
+w3=RNA-Seq_analysis_from_fastq.ga
 
-sed 's;xy-res/;xy-res/chipseq1;g' $wf_dir/$w1 > $wf_dir/ChIP-Seq_analysis_from_fastq-1.ga
-sed 's;xy-res/;xy-res/chipseq2;g' $wf_dir/$w1 > $wf_dir/ChIP-Seq_analysis_from_fastq-2.ga
-sed 's;xy-res;xy-res/rnaseq;g' $wf_dir/$w2 > $wf_dir/RNA-Seq_analysis_from_fastq.ga
+## modify output dir, name and id on wf for two experiments
+my_wf=$local_path/my_wf
+mkdir -p $my_wf
+l=({a..f})
+
+for x in exp1 exp2
+do
+  for w in $w1 $w2 $w3
+  do
+    sed -e "s;/analysis;/$x;g" \
+      -e "s;from fastq;$x;" \
+      -e "s;[0-9];${l[$(( RANDOM % 6 ))]};$(( RANDOM % 10 ))" $wf_dir/$w > $my_wf/$x-$w
+  done
+done
 ```
 The resulting workflows have to be manually uploaded to Galaxy via the GUI or installed with ephemeris.
 ```bash
 workflow-install -g "http://localhost:"$port -u admin@galaxy.org \
-    -p admin -a admin -w $wf_dir
+    -p admin -a admin -w $my_wf
+```
+Modification of the export path on workflows must be followed with the creation of the corresponding export directories.
+```bash
+galaxy_res="${local_path}"/{exp1,exp2}/galaxy-res
+mkdir -m 777 -p $(eval echo $galaxy_res/{chipseq1,chipseq2,rnaseq}/bam_files)
 ```
 
 ### Python bioblend solution
